@@ -1,7 +1,8 @@
-angular.module('tools.ResourceLibrary', [])
+    angular.module('tools.ResourceLibrary', [])
 
+.controller('ResourceLibraryCtrl', function($scope, uniApi, $location, $state ) {
 
-.controller('ResourceLibraryCtrl', function($scope, uniApi ) {
+    $scope.selectedCategory = "all";
 
     function getResources() {
         uniApi.getResources(function(data) {
@@ -10,7 +11,6 @@ angular.module('tools.ResourceLibrary', [])
     }
     getResources();
     
-
     $scope.deleteResource = function(id) {
         var answer = confirm("confirm_resource_delete"); //TODO: translate
         if (answer) {
@@ -20,9 +20,24 @@ angular.module('tools.ResourceLibrary', [])
         }
     };
 
+    $scope.editResource = function(id) {
+        $state.go("resource-library-edit-res", {resourceid:id});
+    };
 
+    $scope.host = $location.host();
+    
 
+    $scope.$on("resource_library_select_resource", function(event, selectedCategory) {
+            $scope.selectedCategory = selectedCategory;
+    });
 
+    $scope.filterByCategory = function(item) {
+        if ($scope.selectedCategory === "all") {
+            return true;
+        }
+
+        return item.category === $scope.selectedCategory;
+    };
 
 })
 

@@ -5,6 +5,7 @@
                 <t>Add Resource</t>
             </h2>
         </legend>
+
         <div class="row form-group">
             <div class="col-lg-2 col-lg-offset-1">
                 <t>addResource_title</t>
@@ -23,7 +24,51 @@
                 <textarea class="form-control" ng-model="uploadDetails.description" cols="20" rows="4" placeholder="Add Descrption Here.. "></textarea>
             </div>
         </div>
+
         <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>category</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+            	<input type="radio" ng-model="options.category" value="select_category"> <t>select_category</t>
+                <input type="radio" ng-model="options.category" value="new_category"> <t>new_category</t>
+            </div>
+        </div>
+
+        <div class="row form-group" ng-show="options.category==='new_category'">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>category</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <input type="text" class="form-control" ng-model="uploadDetails.category" placeholder="category">
+            </div>
+        </div>
+
+        <div class="row form-group" ng-show="options.category==='select_category'">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>select_category</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+            	<select ng-model="uploadDetails.category" ng-options="c for c in categories"></select>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>select_file_type</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+            	<input type="radio" ng-model="options.type" value="url"> <t>url</t>
+            	<input type="radio" ng-model="options.type" value="file"> <t>file</t>
+            </div>
+        </div>
+        
+
+        <div class="row form-group" ng-show="options.type === 'url'">
             <div class="col-lg-2 col-lg-offset-1">
                 <t>url</t>
                 :
@@ -33,95 +78,38 @@
             </div>
         </div>
 
-        <span class="btn primary" ng-click="upload()"><t>upload</t></span>
+        <div class="row form-group" ng-show="options.type === 'file'">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>file</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <input id="uploadFile" type="file" name="theFileToUpload"/>
+            </div>
+        </div>
 
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>thumbnail</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <input id="thumbnail" type="file"/>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>upload</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <span class="btn primary" ng-click="upload()"><span ng-show="options.type === 'url'"><t>upload</t></span><span ng-show="options.type === 'file'"><t>upload file</t></span></span>
+                <a class="btn secondary" ui-sref="resource-library"><t>cancel</t></a>
+            </div>
+        </div>
+        
         <div ng-repeat="f in feedback"><t>{{f}}</t></div>
 
-        <input id="uploadFile" type="file" name="theFileToUpload"/>
-        <span class="btn primary" ng-click="uploadFile()"><t>upload file</t></span>
-
-
-
-
-        <!-- <div class="">
-        <legend>
-            <h2>
-                <t>Add Resource</t>
-            </h2>
-        </legend>
-        <div class="row form-group">
-            <div class="col-lg-2 col-lg-offset-1">
-                <t>addResource_title</t>
-                :
-            </div>
-            <div class="col-lg-5 col-lg-offset-1">
-                <input type="text" class="form-control" ng-model="Resources.title" validate nospace="true" noempty="true" placeholder="Resource Title">
-            </div>
-        </div>
-
-        <div class="row form-group">
-            <div class="col-lg-2 col-lg-offset-1">
-                <t>addResource_description</t>
-                :
-            </div>
-            <div class="col-lg-5 col-lg-offset-1">
-                <textarea class="form-control" validate nospace="true" noempty="true" ng-model="Resources.description" cols="20" rows="4" placeholder="Add Descrption Here.. "></textarea>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-lg-2 col-lg-offset-1">
-                <t>addResource_category</t>
-                :
-            </div>
-            <div class="controls col-lg-5 col-lg-offset-1">
-                <select class="form-control" ng-model="CategoryID" ng-options="category.CategoryID as category.CategoryDescription for category in categories" validate validate-select="true">
-                    <option value="">-- Select a Category --</option>
-                </select>
-
-            </div>
-        </div>
-       
-        <div class="form-group row" ng-show="current.EditResource == 0">
-            <span class="col-lg-2 col-lg-offset-1">
-                <t>addResource_selection</t>
-                :</span>
-            <span class="col-lg-5 col-lg-offset-1">
-                <span class="radio ">
-                    <input type="radio" ng-model="Resources.type" value="1"><t>addResource_file</t>
-                </span>
-                <span class="radio">
-                    <input type="radio" ng-model="Resources.type" value="0"><t>addResource_youtube_url</t>
-                </span>
-            </span>
-        </div>
-
-        <div class="form-group row" ng-if="Resources.type == 1 || current.EditResource == 1 ">
-            <span class="col-lg-2 col-lg-offset-1">
-                <t>addResource_files</t>
-                :
-            </span>
-            <span class="col-lg-5 col-lg-offset-1">
-                <input type="file" ng-file-select="onFileSelect($files)" ng-hide="Resources.type == 0" ng-model="Resources.url" ng-required="Resources.type != 0" /></span>
-        </div>
-        <div class="form-group row" ng-if="Resources.type == 0 ">
-            <span class="col-lg-2 col-lg-offset-1">
-                <t>addResource_youtube_url</t>
-                :
-            </span>
-            <span class="col-lg-5 col-lg-offset-1">
-                <input type="text" class="form-control" ng-hide="Resources.type != 0" ng-model="Resources.youtube_url" ng-required="Resources.type == 0" validate nospace="true" noempty="true" /></span>
-        </div>
-        <div class="row form-group">
-            <span class="col-lg-2 col-lg-offset-1"></span>
-            <span class="col-lg-5 col-lg-offset-1">
-                <a trigger-check="true" validate success="save()" class="btn btn-success">
-                    <t>global_upload</t>
-                </a>
-                <a ng-click="back()" class="btn btn-default">
-                    <t>global_cancel</t>
-                </a>
-            </span>
-        </div>
-
-    </div> -->
     </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="col-xs-12 padding0">
+    <div class="">
+        <legend>
+            <h2>
+                <t>edit_resource</t>
+            </h2>
+        </legend>
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>addResource_title</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <input type="text" class="form-control" ng-model="uploadDetails.title" placeholder="Resource Title">
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>addResource_description</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <textarea class="form-control" ng-model="uploadDetails.description" cols="20" rows="4" placeholder="Add Descrption Here.. "></textarea>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>select_category</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <select ng-model="uploadDetails.category" ng-options="c for c in categories"></select>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>category</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <input type="text" class="form-control" ng-model="uploadDetails.category" placeholder="category">
+            </div>
+        </div>
+
+
+        <div class="row form-group">
+            <div class="col-lg-2 col-lg-offset-1">
+                <t>update</t>
+                :
+            </div>
+            <div class="col-lg-5 col-lg-offset-1">
+                <span class="btn primary" ng-click="update()"><t>update</t></span>
+                <a class="btn secondary" ui-sref="resource-library"><t>cancel</t></a>
+            </div>
+        </div>
+
+        
+        
+        <div ng-repeat="f in feedback"><t>{{f}}</t></div>
+
+
+    </div>

@@ -19,14 +19,6 @@
 
             <div class="col-sm-4">
                 <p>
-                    <a ng-if="current.UserAuthorization.IsAdmin" ng-click="current.EditCategory = 0" ui-sref="resource-library-add-cat" class="btn btn-primary">
-                        <t>add_new_category</t>
-                    </a>
-                </p>
-
-            </div>
-            <div class="col-sm-4">
-                <p>
                     <a ng-if="current.UserAuthorization.IsAdmin" ui-sref="resource-library-add-res" ng-click="current.EditResource = 0" class="btn btn-primary">
                         <t>add_new_resource</t>
                     </a>
@@ -36,101 +28,24 @@
 
         </div>
 
+        <h3 class="selectedCategory">{{selectedCategory}}</h3>
+
         <div class="row">
-            <div ng-repeat="r in resources">
-                <h3>{{r.title}}</h3>
-                <span>{{r.description}}</span>
-                <span>{{r._id}}</span>
-                <a class="btn primary" >download</a>
-                <span class="btn secondary" ng-click="deleteResource(r._id)">delete</span>
+            <div ng-repeat="r in resources | filter: filterByCategory" class="resource col-xs-12 col-sm-6 col-lg-3">
+        		<div class="thumbnail-container">
+            		<img class="thumbnail" src="//{{host}}{{r.thumbnail}}">
+            	</div>
+            	<div class="details">
+	                <h3 class="title">{{r.title}}</h3>
+	                <span class="description">{{r.description}}</span>
+	                <div class="actions">
+		                <a ng-if="r.type==='file'" href="//{{host}}{{r.url}}" class="action download" >download</a>
+		                <a ng-if="r.type==='url'" href="{{r.url}}" class="action download" >download</a>
+		                <span class="action edit" ng-click="editResource(r._id)">edit</span>
+		                <span class="action delete" ng-click="deleteResource(r._id)"><i class="ico ico-trash"></i></span>
+		            </div>
+	            </div>
             </div>
-            <!-- div class="col-sm-12">
-                <div class="container-fluid">
-                    <div class="row" data-ng-repeat="(CategoryDescription,resources) in resourcesGroup">
-                        <div class="class-sm-12">
-                            <legend class="category-legend">
-                                {{CategoryDescription}}
-                                <span class="category-header">
-                                    <a ng-show="current.UserAuthorization.IsAdmin" ng-click="EditCategory(resources[0].CategoryID,CategoryDescription)">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                        <t>global_edit</t>
-                                    </a>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <a ng-show="current.UserAuthorization.IsAdmin" ng-click="DeleteCategory(resources[0].CategoryID,CategoryDescription)">
-                                        <i class="fa fa-times"></i>
-                                        <t>global_delete</t>
-                                    </a>
-                                </span>
-                            </legend>
-                        </div>
-
-                        <div class="row form-group col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="resource in resources">
-                            <div class="text-center">
-                                <span ng-if="resource.type === 0">
-                                    <a href="{{getLinkUrl(resource.youtube_url)}}">
-                                        <img ng-show="resource.youtube_url" src="{{getPreviewUrl(resource.youtube_url)}}" class="resource-thumbnail">
-                                    </a>
-                                </span>
-                                <span ng-if="resource.type === 1">
-                                    <img src="{{getDownloadUrl(resource.url, resource.type)}}">
-                                </span>
-                                <span ng-if="resource.type === 2">
-                                    <i class="ico ico-file resource-icon"></i>
-                                </span>
-                                <span ng-if="resource.type === 3">
-                                    <i class="ico ico-file resource-icon"></i>
-                                </span>
-                            </div>
-                            <div>
-                                {{resource.title}}||{{resource.description}}
-                            </div>
-                            <div class="resource-btn">
-                                <div class="col-xs-12 btn-group">
-                                    <a ng-class="{'cta-btn-row': current.UserAuthorization.IsAdmin}" href="{{getDownloadUrl(resource.url, resource.type)}}" download="{{resource.url}}" ng-show="resource.type !== 0" class="btn btn-sm cta cta-secondary text-center">
-                                        <t>global_download</t>
-                                    </a>
-                                    <a ng-class="{'cta-btn-row': current.UserAuthorization.IsAdmin}" href="{{getLinkUrl(resource.youtube_url)}}" target="_blank" class="btn btn-sm text-center cta cta-secondary" ng-show="resource.type === 0">
-                                        <t>global_view</t>
-                                    </a>
-                                    <a ng-if="current.UserAuthorization.IsAdmin" ng-click="editResource(resource.CategoryID, resource.resourceID)" class="btn btn-sm cta cta-secondary cta-btn-row text-center">
-                                        <t>global_edit</t>
-                                    </a>
-                                    <a ng-if="current.UserAuthorization.IsAdmin" ng-click="deleteResource(resource.resourceID, resource.title)" class="btn btn-sm cta cta-secondary cta-btn-row text-center">
-                                        <t>global_delete</t>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="container-fluid" ng-if="current.UserAuthorization.IsAdmin">
-                    <div class="row" ng-repeat="category in emptyCategoriesArray">
-                        <legend class="category-legend">
-                            {{category.CategoryDescription}}
-                            <span class="category-header">
-                                <a ng-click="EditCategory(category.CategoryID,category.CategoryDescription)">
-                                    <i class="fa fa-pencil-square-o"></i>
-                                    <t>global_edit</t>
-                                </a>
-                                &nbsp;&nbsp;&nbsp;
-                                <a ng-click="DeleteCategory(category.CategoryID,category.CategoryDescription)">
-                                    <i class="fa fa-times"></i>
-                                    <t>global_delete</t>
-                                </a>
-                            </span>
-                        </legend>
-                        <div class="row form-group">
-                            <div class="col-xs-12 text-center">
-                                <t>addResource_no_content</t>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> -->
         </div>
-
     </div>
 </div>
